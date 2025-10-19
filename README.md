@@ -22,7 +22,7 @@ For **Milestone 1**, the focus was on **frontend development** and **database pl
   - Reviews  
   - Inventory  
 
-![erd](/Bunny-and-Bloom-/frontend/assets/img/Screenshot%202025-10-20%20003104.png)
+![erd](/Bunny-and-Bloom-/frontend/assets/img/erd.png)
 
 ---
 
