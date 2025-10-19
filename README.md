@@ -27,6 +27,7 @@ For **Milestone 1**, the focus was on **frontend development** and **database pl
 ---
 
 ## Project Structure
+```
 project-folder/
 │
 ├─ frontend/ # Frontend (client-side)
@@ -51,10 +52,7 @@ project-folder/
 │
 ├─ .gitignore # Files/folders to ignore in version control
 └─ README.md # Project documentation
-
-markdown
-Copy code
-
+```
 ---
 
 ## Next Steps
