@@ -1,7 +1,120 @@
 <div class="container-fluid">
 
-    <section >
+</head>
+<body>
+  <div class="circle circle1"></div>
+  <div class="circle circle2"></div>
+  <div class="circle circle3"></div>
+  <div class="circle circle4"></div>
+  <div class="floating-shape floating-shape1"></div>
+      <div class="floating-shape floating-shape2"></div>
+      <div class="floating-shape floating-shape3"></div>
+  <!-- Emoji specials -->
+  <div class="special-decor decor1">☕</div>
+  <div class="special-decor decor2">🍰</div>
+  <div class="special-decor decor3">🌿</div>
 
-        <div  >
-            <h1>this is menu </h1>
-        </div></section></div>
+<!-- Hero Section -->
+<header class="hero-section">
+  <div class="container-fluid">
+    <div class="row align-items-center">
+      <div class="col-md-6 hero-img d-none d-lg-flex">
+        <img src="/Bunny-and-Bloom-//frontend/assets/img/images/Shiba Café un mini coffee shop cozy dans paris 15 - Stéfy.jpg" alt="Coffee">
+      </div>
+      <div class="col-md-6 maintext">
+        <h1>Enjoy Your <br> Morning Coffee.</h1>
+        <p class="subtext">Boost your productivity and build your mood with a glass of coffee in the morning.</p>
+        <div class="btns">
+          <button class="btn btn-coffee">Get yours now</button>
+          <button  class="btn btn-coffee"> Play video</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Menu Navigation -->
+<nav class="menu-nav">
+  <ul class="d-flex flex-column flex-sm-row justify-content-center gap-3 gap-sm-4 p-0 m-0 list-unstyled">
+    <li class="p-2 px-sm-3 rounded menu-item">Menu</li>
+    <li class="p-2 px-sm-3 rounded menu-item">Deserts</li>
+    <li class="p-2 px-sm-3 rounded menu-item">Drinks</li>
+    <li class="p-2 px-sm-3 rounded menu-item">Lunch</li>
+  </ul>
+</nav>
+
+<!-- Drinks and Add-Ons -->
+<div class="menu-container">
+  <!-- Drinks -->
+  <fieldset class="menu-section">
+    <legend>Drinks</legend>
+    <div class="menu-item">
+      <span>Americano</span>
+      <div class="item-controls">
+        <button class="btn-add">+</button>
+        <button class="btn-remove">−</button>
+        <span class="price">$3.75</span>
+      </div>
+    </div>
+    <div class="menu-item">
+      <span>Cappuccino</span>
+      <div class="item-controls">
+        <button class="btn-add">+</button>
+        <button class="btn-remove">−</button>
+        <span class="price">$4.50</span>
+      </div>
+    </div>
+    <div class="menu-item">
+      <span>Latte</span>
+      <div class="item-controls">
+        <button class="btn-add">+</button>
+        <button class="btn-remove">−</button>
+        <span class="price">$4.25</span>
+      </div>
+    </div>
+  </fieldset>
+
+  <!-- Add-Ons -->
+  <fieldset class="menu-section addons-section">
+    <legend>Add-Ons</legend>
+    <div class="menu-item">
+      <span>Extra Shot</span>
+      <div class="item-controls">
+        <button class="btn-add">+</button>
+        <button class="btn-remove">−</button>
+        <span class="price">$0.75</span>
+      </div>
+    </div>
+    <div class="menu-item">
+      <span>Soy Milk</span>
+      <div class="item-controls">
+        <button class="btn-add">+</button>
+        <button class="btn-remove">−</button>
+        <span class="price">$0.50</span>
+      </div>
+    </div>
+  </fieldset>
+</div>
+
+<!-- Hours Section -->
+<ul class="hours-section">
+  <li>Monday - Friday: 7am - 7pm</li>
+  <li>Saturday: 8am - 5pm</li>
+  <li>Sunday: Closed</li>
+</ul>
+
+<script>
+  // Simple add/remove functionality
+  document.querySelectorAll('.btn-add').forEach(btn => {
+    btn.addEventListener('click', () => {
+      alert('Added to your order!');
+    });
+  });
+  document.querySelectorAll('.btn-remove').forEach(btn => {
+    btn.addEventListener('click', () => {
+      alert('Removed from your order!');
+    });
+  });
+</script>
+
+</div>
