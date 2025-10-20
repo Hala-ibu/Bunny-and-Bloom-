@@ -12,7 +12,7 @@ For **Milestone 1**, the focus was on **frontend development** and **database pl
 - Built **static pages** for the app (no backend yet):  
   - **Register & Login**  
   - **Home, Menu, Blog, About, Profile**  
-  - **Pages for all entities**  
+  - **Page for all entities**  
 - Used **Bootstrap template** for a responsive and consistent design.  
 - Each page is **separate HTML**, with JS and CSS included only once.  
 - Planned the **database with 5 entities**:  
@@ -60,3 +60,39 @@ project-folder/
 - Connect **backend to frontend** with **FlightPHP and AJAX**.  
 - Implement **CRUD operations** for all entities.  
 - Add **authentication and role-based access**.
+---
+
+## Project Overview
+Bunny & Bloom is a website for a coffee shop. This single-page web application (SPA) provides users with a clean, responsive interface to explore the café's offerings, services, and more.
+
+## Pages and Features
+
+### Homepage
+- The first page of the website.
+- Displays:
+  - **Services**: What Bunny & Bloom offers.
+  - **Reviews**: Customer feedback and testimonials.
+  - **Location**: Map and address of the café.
+- Includes a **button to navigate to the Menu** page.
+- Other pages are accessible via the **navbar**.
+
+### Blog
+- Contains news and updates related to the café.
+
+### About
+- Provides a general explanation of the website and the café.
+
+### User Pages
+- **Login & Registration**: Allow users to sign in and create an account.
+- **Profile**: A personal page for each user to view and manage their information.
+
+### Admin Page
+- Accessible only to admins.
+- Manages **five entities**:  
+  - Users  
+  - Products  
+  - Orders  
+  - Reviews  
+  - Inventory  
+
+---
