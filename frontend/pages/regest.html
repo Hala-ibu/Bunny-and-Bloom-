@@ -1,0 +1,59 @@
+<div class="container-fluid body position-relative p-4 p-md-5" >
+
+  <!-- Decorative circles (hidden on small screens) -->
+  <div class="circle circle1 d-none d-lg-block"></div>
+  <div class="circle circle2 d-none d-lg-block"></div>
+  <div class="circle circle3 d-none d-lg-block"></div>
+  <div class="circle circle4 d-none d-lg-block"></div>
+
+  <!-- Emoji specials -->
+  <div class="special-decor decor1 d-none d-md-block">☕</div>
+  <div class="special-decor decor2 d-none d-md-block">🍰</div>
+  <div class="special-decor decor3 d-none d-md-block">🌿</div>
+
+  <!-- Form Section -->
+  <section class="d-flex justify-content-center align-items-center" style="min-height:76vh;">
+    <form id="myForm" class="boxit p-4 p-md-5 shadow rounded" >
+      <legend class="text-center"><h4>Registration</h4></legend>
+
+      <div class="mb-3">
+        <input type="text" id="Username" class="form-control" placeholder="Username" name="Username" required>
+      </div>
+      <div class="mb-3">
+        <input type="text" id="FirstName" class="form-control" placeholder="First Name" name="FirstName" required>
+      </div>
+      <div class="mb-3">
+        <input type="text" id="LastName" class="form-control" placeholder="Last Name" name="LastName" required>
+      </div>
+      <div class="mb-3">
+        <input type="email" id="Email" class="form-control" placeholder="Email" name="Email" required>
+      </div>
+      <div class="mb-3">
+        <input type="password" id="Password" class="form-control" placeholder="Password" name="Password" required>
+      </div>
+      <div class="mb-3">
+        <select class="form-select" id="Gender" name="Gender" required>
+          <option value="" disabled selected>Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <input type="number" id="Age" class="form-control" placeholder="Age" name="Age" required>
+      </div>
+
+      <div class="form-check mb-3">
+        <input class="form-check-input" type="checkbox" id="check" name="Terms" required>
+        <label class="form-check-label" for="check">I agree to the terms and conditions</label>
+      </div>
+
+      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+        <button type="submit" class="btn btn-coffee w-100 w-md-auto">Register</button>
+        <div class="text-center text-md-start">
+          <p class="mb-0">Have an account? <a href="login.html">Login</a></p>
+        </div>
+      </div>
+    </form>
+  </section>
+</div>
