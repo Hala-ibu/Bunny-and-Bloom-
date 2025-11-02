@@ -1,37 +1,137 @@
-<div class="container-fluid body position-relative p-4 p-md-5" >
-  <link rel="stylesheet" href="/Bunny-and-Bloom-/frontend/assets/css/regest.css">
+<div class="container-fluid p-0">
 
-  <!-- Decorative circles (hidden on small screens) -->
-  <div class="circle circle1 d-none d-lg-block"></div>
-  <div class="circle circle2 d-none d-lg-block"></div>
-  <div class="circle circle3 d-none d-lg-block"></div>
-  <div class="circle circle4 d-none d-lg-block"></div>
+    <link rel="stylesheet" href="/frontend/assets/css/regest.css">
+    
+    <style>
+        /* Base styling for the pill navigation containers */
+        .auth-pills {
+            margin-bottom: 2rem !important; /* Increase space below pills */
+        }
 
-  <!-- Emoji specials -->
-  <div class="special-decor decor1 d-none d-md-block">☕</div>
-  <div class="special-decor decor2 d-none d-md-block">🍰</div>
-  <div class="special-decor decor3 d-none d-md-block">🌿</div>
+        /* Styling for the pill buttons themselves */
+        .auth-pills .nav-link {
+            color: #fff; /* White text */
+            background-color: #38761D; /* A dark green, adjust to your exact color */
+            border-radius: 50px; /* Fully rounded pills */
+            margin: 0 10px; /* Increase space between pills */
+            padding: 12px 30px; /* Increased padding for larger buttons */
+            font-size: 1.1rem; /* Slightly larger font */
+            font-weight: bold; /* Bolder text */
+            transition: all 0.3s ease; /* Smooth transition for hover effects */
+            border: 2px solid #2B5C15; /* Add a subtle darker border */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add a noticeable shadow */
+        }
+        
+        /* Styling for the ACTIVE pill button */
+        .auth-pills .nav-link.active {
+            background-color: #2B5C15; /* Slightly darker green when active for contrast */
+            color: #F8F4E8; /* Lighter text for active, if needed */
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow when active */
+            transform: translateY(-2px); /* Slightly lift the active button */
+            border-color: #F8F4E8; /* Highlight border for active pill */
+        }
 
-  <!-- Form Section -->
-  <section class="d-flex justify-content-center align-items-center" style="min-height:76vh;">
-    <form id="login-form" class="boxit p-4 p-md-5 shadow rounded">
-      <legend class="text-center"><h4>Log in</h4></legend>
+        /* Hover effect for non-active pills */
+        .auth-pills .nav-link:not(.active):hover {
+            background-color: #4C9F38; /* Lighter green on hover */
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
+            transform: translateY(-1px);
+            cursor: pointer;
+        }
+        
+        /* Ensure the entire authentication section centers everything */
+        .auth-container {
+            min-height: 76vh;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
 
-      <div class="mb-3">
-        <input type="email" id="email" class="form-control" placeholder="Email" name="Email" required>
-      </div>
-      <div class="mb-3">
-        <input type="password" id="password" class="form-control" placeholder="Password" name="Password" required>
-      </div>
+<div class="container-fluid body position-relative p-4 p-md-5">
 
-      <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
-        <button type="submit" class="btn btn-coffee w-100 w-md-auto">Sign in</button>
-        <div class="text-center text-md-start">
-          <p class="mb-0">Don't have an account? <a href="registration.html">Register</a></p>
+    <div class="circle circle1 d-none d-lg-block"></div>
+    <div class="circle circle2 d-none d-lg-block"></div>
+    <div class="circle circle3 d-none d-lg-block"></div>
+    <div class="circle circle4 d-none d-lg-block"></div>
+    <div class="special-decor decor1 d-none d-md-block">☕</div>
+    <div class="special-decor decor2 d-none d-md-block">🍰</div>
+    <div class="special-decor decor3 d-none d-md-block">🌿</div>
+
+    <section class="auth-container">
+        
+        <div class="nav nav-pills justify-content-center m-5 auth-pills" id="authPills" role="tablist">
+            
+            <button class="nav-link active" id="register-pill" data-bs-toggle="pill" data-bs-target="#registration-content" type="button" role="tab" aria-controls="registration-content" aria-selected="true">
+                Registration
+            </button>
+
+            <button class="nav-link" id="login-pill" data-bs-toggle="pill" data-bs-target="#login-content" type="button" role="tab" aria-controls="login-content" aria-selected="false">
+                Login
+            </button>
         </div>
-        <a href="#" class="text-decoration-none mt-2 mt-md-0">Forgot password?</a>
-      </div>
-    </form>
-  </section>
+
+        <div class="boxit p-4 p-md-5 shadow rounded">
+
+            <div class="tab-content" id="authPillContent">
+
+                <div class="tab-pane fade show active" id="registration-content" role="tabpanel" aria-labelledby="register-pill" tabindex="0">
+                    
+                    <form id="myForm" >
+                        <legend class="text-center"><h4>Registration</h4></legend>
+
+                        <div class="mb-3"><input type="text" id="Username" class="form-control" placeholder="Username" name="Username" required></div>
+                        <div class="mb-3"><input type="text" id="FirstName" class="form-control" placeholder="First Name" name="FirstName" required></div>
+                        <div class="mb-3"><input type="text" id="LastName" class="form-control" placeholder="Last Name" name="LastName" required></div>
+                        <div class="mb-3"><input type="email" id="Email" class="form-control" placeholder="Email" name="Email" required></div>
+                        <div class="mb-3"><input type="password" id="Password" class="form-control" placeholder="Password" name="Password" required></div>
+                        <div class="mb-3">
+                            <select class="form-select" id="Gender" name="Gender" required>
+                                <option value="" disabled selected>Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="mb-3"><input type="number" id="Age" class="form-control" placeholder="Age" name="Age" required></div>
+
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="check" name="Terms" required>
+                            <label class="form-check-label" for="check">I agree to the terms and conditions</label>
+                        </div>
+
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                            <button type="submit" class="btn btn-coffee w-100 w-md-auto">Register</button>
+                            <div class="text-center text-md-start">
+                                <p class="mb-0">Have an account? <a href="#login-content" data-bs-toggle="pill">Login</a></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade" id="login-content" role="tabpanel" aria-labelledby="login-pill" tabindex="0">
+                    
+                    <form id="login-form">
+                        <legend class="text-center"><h4>Log in</h4></legend>
+
+                        <div class="mb-3"><input type="email" id="email" class="form-control" placeholder="Email" name="Email" required></div>
+                        <div class="mb-3"><input type="password" id="password" class="form-control" placeholder="Password" name="Password" required></div>
+
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                            <button type="submit" class="btn btn-coffee w-100 w-md-auto">Sign in</button>
+                            <div class="text-center text-md-start">
+                                <p class="mb-0">Don't have an account? <a href="#registration-content" data-bs-toggle="pill">Register</a></p>
+                            </div>
+                            <a href="#" class="text-decoration-none mt-2 mt-md-0">Forgot password?</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div> </div> </section>
 
 </div>
+
+</body></div>
