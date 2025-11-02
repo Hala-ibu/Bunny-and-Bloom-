@@ -1,0 +1,8 @@
+# 1. CRITICAL: Database Configuration and Secrets
+config.php
+.env
+# Ignores all SQL database dump files
+*.sql
+
+# 2. Dependencies (installed by Composer)
+vendor/
