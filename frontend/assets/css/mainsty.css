@@ -494,7 +494,7 @@ nav.menu-nav ul li { cursor: pointer; padding: 8px 12px; border-radius: 6px; tra
 nav.menu-nav ul li:hover { background-color: #caa472; color: white; }
 
 /* --- Menu Sections --- */
-.menu-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin: 0 20px; }
+.menu-container { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin: 20px; }
 
 fieldset.menu-section {
   border: 2px solid #4b2e1e;
