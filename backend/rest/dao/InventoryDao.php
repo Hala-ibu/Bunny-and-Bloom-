@@ -29,6 +29,22 @@ class InventoryDao extends BaseDao {
         $stmt->bindParam(':product_id', $product_id);
         return $stmt->execute();
     }
-}
 
+ 
+    public function getAllStock() {
+        $sql = "SELECT i.quantity AS stock_quantity, p.name AS product_name, p.description AS category, p.price
+                FROM inventory i
+                JOIN products p ON i.product_id = p.id";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+ 
+    public function deleteByProductId($product_id) {
+        $stmt = $this->connection->prepare("DELETE FROM inventory WHERE product_id = :product_id");
+        $stmt->bindParam(':product_id', $product_id);
+        return $stmt->execute();
+    }
+}
 ?>

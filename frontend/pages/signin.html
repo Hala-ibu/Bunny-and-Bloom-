@@ -3,43 +3,38 @@
     <link rel="stylesheet" href="/frontend/assets/css/regest.css">
     
     <style>
-        /* Base styling for the pill navigation containers */
         .auth-pills {
-            margin-bottom: 2rem !important; /* Increase space below pills */
+            margin-bottom: 2rem !important;
         }
 
-        /* Styling for the pill buttons themselves */
         .auth-pills .nav-link {
-            color: #fff; /* White text */
-            background-color: #38761D; /* A dark green, adjust to your exact color */
-            border-radius: 50px; /* Fully rounded pills */
-            margin: 0 10px; /* Increase space between pills */
-            padding: 12px 30px; /* Increased padding for larger buttons */
-            font-size: 1.1rem; /* Slightly larger font */
-            font-weight: bold; /* Bolder text */
-            transition: all 0.3s ease; /* Smooth transition for hover effects */
-            border: 2px solid #2B5C15; /* Add a subtle darker border */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Add a noticeable shadow */
+            color: #fff; 
+            background-color: #38761D; 
+            border-radius: 50px; 
+            margin: 0 10px; 
+            padding: 12px 30px; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            transition: all 0.3s ease; 
+            border: 2px solid #2B5C15; 
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
         }
         
-        /* Styling for the ACTIVE pill button */
         .auth-pills .nav-link.active {
-            background-color: #2B5C15; /* Slightly darker green when active for contrast */
-            color: #F8F4E8; /* Lighter text for active, if needed */
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); /* Deeper shadow when active */
-            transform: translateY(-2px); /* Slightly lift the active button */
-            border-color: #F8F4E8; /* Highlight border for active pill */
+            background-color: #2B5C15; 
+            color: #F8F4E8; 
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3); 
+            transform: translateY(-2px); 
+            border-color: #F8F4E8; 
         }
 
-        /* Hover effect for non-active pills */
         .auth-pills .nav-link:not(.active):hover {
-            background-color: #4C9F38; /* Lighter green on hover */
+            background-color: #4C9F38; 
             box-shadow: 0 5px 12px rgba(0, 0, 0, 0.25);
             transform: translateY(-1px);
             cursor: pointer;
         }
         
-        /* Ensure the entire authentication section centers everything */
         .auth-container {
             min-height: 76vh;
             display: flex;

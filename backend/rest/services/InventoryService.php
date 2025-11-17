@@ -13,6 +13,8 @@ class InventoryService extends BaseService {
         $this->productService = new ProductService();
     }
     
+
+
     public function adjustStock($product_id, $quantity_change) {
         if (!is_numeric($quantity_change) || $quantity_change == 0) {
             throw new Exception("Invalid quantity change value.");
@@ -38,6 +40,10 @@ class InventoryService extends BaseService {
         $currentStock = $this->dao->getStockByProductId($product_id);
         
         return $currentStock >= $quantity_needed;
+    }
+
+    public function getAllStockDetails() {
+        return $this->dao->getAllStock();
     }
 }
 ?>

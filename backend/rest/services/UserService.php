@@ -1,12 +1,13 @@
 <?php
 require_once 'BaseService.php';
-require_once 'dao/UserDao.php'; 
+require_once 'UserDao.php'; 
 
 class UserService extends BaseService {
 
     public function __construct() {
         parent::__construct(new UserDao()); 
     }
+
 
     public function registerUser($data) {
         if (empty($data['email']) || empty($data['password']) || empty($data['username'])) {
@@ -20,10 +21,16 @@ class UserService extends BaseService {
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
         $data['role'] = 'User'; 
         
-        return $this->create($data); 
+        $cleanData = [
+            'username' => $data['username'],
+            'email' => $data['email'],
+            'password' => $data['password'],
+            'role' => $data['role']
+        ];
+
+        return $this->create($cleanData); 
     }
     
-
     public function login($email, $password) {
         $user = $this->dao->getByEmail($email);
         
@@ -33,15 +40,22 @@ class UserService extends BaseService {
         }
         return false;
     }
-    
 
     public function getAllUsers() {
-        return $this->dao->getAll();
+        return $this->dao->getAllUsers(); 
     }
     
- 
+
     public function updateProfile($id, $data) {
-        return $this->update($id, $data);
+        if (isset($data['role']) && !in_array($data['role'], ['User', 'Admin', 'Staff'])) {
+            throw new Exception("Invalid role specified.");
+        }
+        return $this->dao->updateUser($id, $data);
+    }
+
+
+    public function deleteUser($id) {
+        return $this->dao->deleteUser($id);
     }
 }
 ?>
