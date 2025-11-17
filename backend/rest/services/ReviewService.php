@@ -9,6 +9,7 @@ class ReviewService extends BaseService {
         parent::__construct($dao);
     }
 
+
     public function submitReview($data) {
         $rating = $data['rating'] ?? 0;
         if (!is_numeric($rating) || $rating < 1 || $rating > 5) {
@@ -33,7 +34,15 @@ class ReviewService extends BaseService {
     }
     
     public function getReviewsByProduct($product_id) {
-        return $this->dao->getByProduct($product_id);
+        return $this->dao->getByProductId($product_id);
+    }
+
+    public function getAllReviews() {
+        return $this->dao->getAllReviews();
+    }
+
+    public function deleteReview($review_id) {
+        return $this->dao->deleteReview($review_id);
     }
 }
 

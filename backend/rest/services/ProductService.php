@@ -1,12 +1,16 @@
 <?php
 require_once 'BaseService.php';
 require_once 'ProductDao.php'; 
+require_once 'InventoryService.php'; 
 
 class ProductService extends BaseService {
+
+    private $inventoryService;
 
     public function __construct() {
         $dao = new ProductDao(); 
         parent::__construct($dao);
+        $this->inventoryService = new InventoryService(); 
     }
 
     public function createProduct($data) {
@@ -18,8 +22,6 @@ class ProductService extends BaseService {
             throw new Exception("A product with this name already exists.");
         }
         
-        $data['stock_quantity'] = $data['stock_quantity'] ?? 0;
-
         return $this->create($data); 
     }
     
@@ -33,6 +35,15 @@ class ProductService extends BaseService {
         }
         
         return $this->update($id, $data);
+    }
+    
+  
+    public function deleteProduct($product_id) {
+        $inventoryDeleted = $this->inventoryService->deleteInventoryRecord($product_id);
+        
+        $productDeleted = $this->dao->deleteProduct($product_id);
+        
+        return $inventoryDeleted && $productDeleted;
     }
 }
 ?>

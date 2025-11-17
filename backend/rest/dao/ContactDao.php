@@ -3,12 +3,12 @@ require_once 'BaseDao.php';
 
 class ContactDao extends BaseDao {
     public function __construct() {
-        parent::__construct("contact_messages"); 
+        parent::__construct("contact_messages");
     }
 
 
-    public function saveMessage($data) {
-        return $this->insert($data);
+    public function getAllMessages() {
+        return $this->getAll(); 
     }
 }
 ?>

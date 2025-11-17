@@ -5,4 +5,4 @@ config.php
 *.sql
 
 # 2. Dependencies (installed by Composer)
-vendor/
+vendor

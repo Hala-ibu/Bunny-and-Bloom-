@@ -8,58 +8,34 @@ For **Milestone 1**, the focus was on **frontend development** and **database pl
 ---
 
 ## What I did so far
-- Created the **project structure** following the intended organization.  
-- Built **static pages** for the app (no backend yet):  
-  - **Register & Login**  
-  - **Home, Menu, Blog, About, Profile**  
-  - **Page for all entities**  
-- Used **Bootstrap template** for a responsive and consistent design.  
-- Each page is **separate HTML**, with JS and CSS included only once.  
-- Planned the **database with 5 entities**:  
-  - Users  
-  - Products  
-  - Orders  
-  - Reviews  
-  - Inventory  
+- Created the **project structure** following the intended organization.
+- Built **static pages** for the app (no backend yet):
+    - **Register & Login**
+    - **Home, Menu, Blog, About, Profile**
+    - **Page for all entities**
+- Used **Bootstrap template** for a responsive and consistent design.
+- Each page is **separate HTML**, with JS and CSS included only once.
+- Planned the **database with 5 entities**:
+    - Users
+    - Products
+    - Orders
+    - Reviews
+    - Inventory
 
 ![erd](frontend/assets/img/erd.png)
 
 ---
 
 ## Project Structure
-```
-project-folder/
-│
-├─ frontend/ # Frontend (client-side)
-│ ├─ index.html # Main HTML file (entry point)
-│ ├─ assets/ # Static assets (images, fonts, icons)
-│ │ ├─ css/ # Stylesheets (global & component-specific)
-│ │ ├─ js/ # JavaScript files for interactivity
-│ ├─ pages/ # Individual HTML/component files for pages
-│ ├─ services/ # API calls and frontend service logic
-│ └─ utils/ # Utility functions (formatting, validation)
-│
-├─ backend/ # Backend (server-side)
-│ ├─ rest/ # REST API endpoints
-│ │ ├─ routes/ # API routes
-│ │ ├─ services/ # Business logic
-│ │ └─ dao/ # Data Access Objects for database
-│ ├─ index.php # Backend entry point
-│ ├─ .htaccess # Server configuration & URL rewriting
-│ ├─ vendor/ # Composer dependencies
-│ ├─ composer.json # PHP dependencies & metadata
-│ └─ composer.lock # Locked dependency versions
-│
-├─ .gitignore # Files/folders to ignore in version control
-└─ README.md # Project documentation
-```
+project-folder/ │ ├─ frontend/ # Frontend (client-side) │ ├─ index.html # Main HTML file (entry point) │ ├─ assets/ # Static assets (images, fonts, icons) │ │ ├─ css/ # Stylesheets (global & component-specific) │ │ ├─ js/ # JavaScript files for interactivity │ ├─ pages/ # Individual HTML/component files for pages │ ├─ services/ # API calls and frontend service logic │ └─ utils/ # Utility functions (formatting, validation) │ ├─ backend/ # Backend (server-side) │ ├─ rest/ # REST API endpoints │ │ ├─ routes/ # API routes │ │ ├─ services/ # Business logic │ │ └─ dao/ # Data Access Objects for database │ ├─ index.php # Backend entry point │ ├─ .htaccess # Server configuration & URL rewriting │ ├─ vendor/ # Composer dependencies │ ├─ composer.json # PHP dependencies & metadata │ └─ composer.lock # Locked dependency versions │ ├─ .gitignore # Files/folders to ignore in version control └─ README.md # Project documentation
+
 ---
 
 ## Next Steps
-- Create the **database in MySQL**.  
-- Connect **backend to frontend** with **FlightPHP and AJAX**.  
-- Implement **CRUD operations** for all entities.  
-- Add **authentication and role-based access**.
+- Create the **database in MySQL**.
+- Connect **backend to frontend** with **FlightPHP and AJAX**.
+- Implement **CRUD operations** for all entities.
+- Add **authentication and role-mbased access**.
 ---
 
 ## Project Overview
@@ -70,9 +46,9 @@ Bunny & Bloom is a website for a coffee shop. This single-page web application (
 ### Homepage
 - The first page of the website.
 - Displays:
-  - **Services**: What Bunny & Bloom offers.
-  - **Reviews**: Customer feedback and testimonials.
-  - **Location**: Map and address of the café.
+    - **Services**: What Bunny & Bloom offers.
+    - **Reviews**: Customer feedback and testimonials.
+    - **Location**: Map and address of the café.
 - Includes a **button to navigate to the Menu** page.
 - Other pages are accessible via the **navbar**.
 
@@ -88,11 +64,9 @@ Bunny & Bloom is a website for a coffee shop. This single-page web application (
 
 ### Admin Page
 - Accessible only to admins.
-- Manages **five entities**:  
-  - Users  
-  - Products  
-  - Orders  
-  - Reviews  
-  - Inventory  
-
----
+- Manages **five entities**:
+    - Users
+    - Products
+    - Orders
+    - Reviews
+    - Inventory

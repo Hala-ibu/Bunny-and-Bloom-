@@ -3,7 +3,7 @@ require_once 'BaseDao.php';
 
 class OrderProductsDao extends BaseDao {
     public function __construct() {
-        parent::__construct("Order_Products");
+        parent::__construct("Order_Products"); 
     }
 
 
@@ -27,15 +27,16 @@ class OrderProductsDao extends BaseDao {
         return $success;
     }
     
+
     public function getItemsByOrderId($order_id) {
-    $stmt = $this->connection->prepare(
-        "SELECT product_id, quantity 
-         FROM Order_Products 
-         WHERE order_id = :order_id"
-    );
-    $stmt->bindParam(':order_id', $order_id);
-    $stmt->execute();
-    return $stmt->fetchAll();
+        $stmt = $this->connection->prepare(
+            "SELECT product_id, quantity 
+             FROM Order_Products 
+             WHERE order_id = :order_id"
+        );
+        $stmt->bindParam(':order_id', $order_id);
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }
 ?>
