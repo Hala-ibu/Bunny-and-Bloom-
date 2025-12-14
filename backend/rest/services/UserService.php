@@ -1,8 +1,9 @@
 <?php
 require_once 'BaseService.php';
 require_once 'UserDao.php'; 
+require_once __DIR__ . '/../../config.php'; 
 
-use Firebase\JWT\JWT; // <--- ADD THIS LINE
+use Firebase\JWT\JWT; 
 
 class UserService extends BaseService {
 
@@ -20,7 +21,7 @@ class UserService extends BaseService {
         }
 
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        $data['role'] = 'user'; // Ensure default role is lowercase 'user'
+        $data['role'] = 'user'; 
         
         $cleanData = [
             'username' => $data['username'],
@@ -32,7 +33,6 @@ class UserService extends BaseService {
         return $this->create($cleanData); 
     }
     
-    // MODIFIED LOGIN FUNCTION
     public function login($email, $password) {
         $user = $this->dao->getByEmail($email);
         
@@ -40,14 +40,14 @@ class UserService extends BaseService {
             unset($user['password']);
             
             $time = time(); 
-            $expiration_time = $time + JWT_EXPIRATION_SECONDS;
+            $expiration_time = $time + Config::JWT_EXPIRATION_SECONDS();
             
             $payload = [
                 'iat'  => $time,
                 'exp'  => $expiration_time,
-                'iss'  => JWT_ISSUER,
-                'sub'  => $user['id'], // Subject: user ID
-                'user' => [ // Custom claims to store in the token
+                'iss'  => Config::JWT_ISSUER(), 
+                'sub'  => $user['id'], 
+                'user' => [ 
                     'id'   => $user['id'],
                     'role' => $user['role']
                 ]
@@ -55,26 +55,25 @@ class UserService extends BaseService {
             
             $jwt = JWT::encode(
                 $payload, 
-                JWT_SECRET,
-                JWT_ALGORITHM
+                Config::JWT_SECRET(),
+                Config::JWT_ALGORITHM() 
             );
             
             return [
                 'user'  => $user,
-                'token' => $jwt // Return the generated token
+                'token' => $jwt 
             ];
         }
         
         return false;
     }
-    // END MODIFIED LOGIN FUNCTION
 
     public function getAllUsers() {
         return $this->dao->getAllUsers(); 
     }
     
     public function updateProfile($id, $data) {
-        $allowedRoles = ['user', 'admin']; // Ensure roles are checked and match your DB enum
+        $allowedRoles = ['user', 'admin']; 
         
         if (isset($data['role']) && !in_array(strtolower($data['role']), $allowedRoles)) {
             throw new Exception("Invalid role specified.");

@@ -28,26 +28,19 @@
  * )
  */
 Flight::route('POST /orders', function(){
-    Flight::auth_middleware()->authorizeRoles(['user', 'admin']); // Must be authenticated
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]); 
     $data = Flight::request()->data->getData();
     $user = Flight::get('user');
     
-    // **SECURITY FIX:** Force the user_id to be the authenticated user's ID
     $data['user_id'] = $user['id']; 
 
     try {
         $orderId = Flight::orderService()->placeOrder($data);
         Flight::json(['message' => 'Order placed successfully', 'order_id' => $orderId]);
     } catch (Exception $e) {
-        // Status code 400 for business logic errors like "Out of stock"
         Flight::json(['error' => $e->getMessage()], 400); 
     }
 });
-
-
-// ----------------------------------------------------------------------
-// NEW USER-FACING READ ROUTES (Role: user, admin)
-// ----------------------------------------------------------------------
 
 /**
  * @OA\Get(
@@ -60,12 +53,10 @@ Flight::route('POST /orders', function(){
  * )
  */
 Flight::route('GET /orders', function(){
-    Flight::auth_middleware()->authorizeRoles(['user', 'admin']);
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $user = Flight::get('user');
     $user_id = $user['id'];
     
-    // Service method to fetch orders by user ID
-    // (This requires implementation in your OrderService and OrderDao layers)
     Flight::json(Flight::orderService()->getOrdersByUserId($user_id));
 });
 
@@ -81,26 +72,18 @@ Flight::route('GET /orders', function(){
  * )
  */
 Flight::route('GET /orders/@id', function($id){
-    Flight::auth_middleware()->authorizeRoles(['user', 'admin']);
+    Flight::auth_middleware()->authorizeRoles([Roles::USER, Roles::ADMIN]);
     $user = Flight::get('user');
     
-    // Service method that checks for order ID AND user ownership
-    // (This requires implementation in your OrderService layer)
     $order = Flight::orderService()->getOrderByUserAndId($user['id'], $id); 
     
     if ($order) {
         Flight::json($order);
     } else {
-        // Use 404 for security: does not distinguish between a non-existent order and one 
-        // that exists but belongs to another user.
         Flight::json(['error' => 'Order not found or access forbidden'], 404);
     }
 });
 
-
-// ----------------------------------------------------------------------
-// ADMIN-ONLY ROUTES (Role: admin)
-// ----------------------------------------------------------------------
 
 /**
  * @OA\Get(
@@ -112,8 +95,7 @@ Flight::route('GET /orders/@id', function($id){
  * )
  */
 Flight::route('GET /admin/orders', function(){
-    Flight::auth_middleware()->authorizeRoles(['admin']);    
-    // Assumes getAllOrders is implemented in the service layer
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN); 
     Flight::json(Flight::orderService()->getAllOrders());
 });
 
@@ -129,7 +111,7 @@ Flight::route('GET /admin/orders', function(){
  * )
  */
 Flight::route('GET /admin/orders/@id', function($id){
-    Flight::auth_middleware()->authorizeRoles(['admin']);    
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN); 
     $order = Flight::orderService()->getOrderDetails($id);
     if ($order) {
         Flight::json($order);
@@ -157,13 +139,13 @@ Flight::route('GET /admin/orders/@id', function($id){
  * )
  */
 Flight::route('PUT /admin/orders/@id/status', function($id){
-    Flight::auth_middleware()->authorizeRoles(['admin']);    
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN); 
     $data = Flight::request()->data->getData();
     try {
-        // Assumes updateOrderStatus is implemented in the service layer
         Flight::orderService()->updateOrderStatus($id, $data['status']); 
         Flight::json(['message' => 'Order status updated successfully']);
     } catch (Exception $e) {
         Flight::json(['error' => $e->getMessage()], 404);
     }
 });
+?>

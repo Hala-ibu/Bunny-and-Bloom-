@@ -37,7 +37,7 @@ Flight::route('POST /contact', function(){
  * )
  */
 Flight::route('GET /admin/contact', function(){
-    Flight::auth_middleware()->authorizeRoles(['admin']); 
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN); 
     Flight::json(Flight::contactService()->getAllMessages());
 });
 ?>

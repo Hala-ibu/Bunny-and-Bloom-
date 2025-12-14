@@ -1,61 +1,54 @@
 <?php
-
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Firebase\JWT\ExpiredException;
-use Firebase\JWT\SignatureInvalidException;
-use Firebase\JWT\BeforeValidException;
+require_once __DIR__ . '/../constants/Roles.php';
 
-class AuthMiddleware {
+class AuthMiddleware
+{
+    protected $app;
 
-    public function verifyToken($token) {
-        if (!$token) {
-            throw new Exception("Missing JWT token in Authorization header.", 401);
-        }
-
-        if (strpos($token, 'Bearer ') === 0) {
-            $token = substr($token, 7);
-        }
-
-        try {
-            $decoded = JWT::decode($token, new Key(JWT_SECRET, JWT_ALGORITHM));
-            
-            if ($decoded->iss !== JWT_ISSUER) {
-                throw new Exception("Invalid token issuer.", 401);
-            }
-
-            Flight::set('user', (array) $decoded->user); 
-
-            return $decoded;
-
-        } catch (ExpiredException $e) {
-            throw new Exception("Token has expired. Please log in again.", 401);
-        } catch (SignatureInvalidException $e) {
-            throw new Exception("Invalid signature. Token unauthorized.", 401);
-        } catch (BeforeValidException $e) {
-             throw new Exception("Token is not yet valid.", 401);
-        } catch (Exception $e) {
-            throw new Exception("Invalid token format or secret.", 401);
-        }
+    public function __construct($app) {
+        $this->app = $app;
     }
 
-    public function authorizeRoles($allowedRoles) {
-        $user = Flight::get('user');
+    public function verifyToken($authHeader) {
+        if (!$authHeader) {
+            throw new Exception("Missing authorization header.");
+        }
 
-        if (!$user || !isset($user['role'])) {
-            Flight::halt(403, "Authorization required.");
+        if (preg_match('/Bearer\s+(.*)/', $authHeader, $matches)) {
+            $token = $matches[1];
+        } else {
+            $token = $authHeader;
         }
         
-        $userRole = strtolower($user['role']);
-        $allowedRoles = array_map('strtolower', $allowedRoles);
-
-        if (!in_array($userRole, $allowedRoles)) {
-            Flight::halt(403, "Access forbidden. Required roles: " . implode(', ', $allowedRoles) . ".");
+        if (!$token) {
+            throw new Exception("Missing token in authorization header.");
         }
+
+        $decoded_token = JWT::decode($token, new Key(Config::JWT_SECRET(), 'HS256'));
+
+        $this->app->set('user', $decoded_token->user);
+        
+        return true;
     }
-    
-    public function authorizeRole($allowedRole) {
-        $this->authorizeRoles([$allowedRole]);
+
+    public function authorizeRole($requiredRole) {
+        $user = $this->app->get('user');
+
+        if (!$user || !isset($user['role']) || $user['role'] !== $requiredRole) {
+            Flight::halt(403, "Access denied. Role does not meet requirement: {$requiredRole}");
+        }
+        return true;
+    }
+
+    public function authorizeRoles(array $requiredRoles) {
+        $user = $this->app->get('user');
+
+        if (!$user || !isset($user['role']) || !in_array($user['role'], $requiredRoles)) {
+            $rolesString = implode(', ', $requiredRoles);
+            Flight::halt(403, "Access denied. User must be one of the following roles: {$rolesString}");
+        }
+        return true;
     }
 }
-?>
