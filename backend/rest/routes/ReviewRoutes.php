@@ -32,8 +32,13 @@ Flight::route('GET /reviews/product/@product_id', function($product_id){
  * )
  */
 Flight::route('POST /reviews', function(){
-    // TODO: Add security check (user must be logged in)
+    Flight::auth_middleware()->authorizeRoles(['user', 'admin']); // **FIX:** Allow regular 'user' role
     $data = Flight::request()->data->getData();
+    $user = Flight::get('user');
+
+    // **SECURITY FIX:** Force the user_id to be the authenticated user's ID
+    $data['user_id'] = $user['id']; 
+
     try {
         $review = Flight::reviewService()->submitReview($data);
         Flight::json($review);
@@ -52,7 +57,7 @@ Flight::route('POST /reviews', function(){
  * )
  */
 Flight::route('GET /admin/reviews', function(){
-    // TODO: Add security check for admin role
+    Flight::auth_middleware()->authorizeRoles(['admin']);    
     Flight::json(Flight::reviewService()->getAllReviews());
 });
 
@@ -66,7 +71,7 @@ Flight::route('GET /admin/reviews', function(){
  * )
  */
 Flight::route('DELETE /admin/reviews/@id', function($id){
-    // TODO: Add security check for admin role
+    Flight::auth_middleware()->authorizeRoles(['admin']);    
     try {
         Flight::reviewService()->deleteReview($id);
         Flight::json(['message' => 'Review deleted successfully']);

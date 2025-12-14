@@ -63,7 +63,7 @@ Flight::route('GET /products/category/@name', function($name){
  * )
  */
 Flight::route('POST /admin/products', function(){
-    // TODO: Add security check for admin role
+    Flight::auth_middleware()->authorizeRoles(['admin']);    
     $data = Flight::request()->data->getData();
     try {
         $newProduct = Flight::productService()->createProduct($data);
@@ -90,7 +90,7 @@ Flight::route('POST /admin/products', function(){
  * )
  */
 Flight::route('PUT /admin/products/@id', function($id){
-    // TODO: Add security check for admin role
+    Flight::auth_middleware()->authorizeRoles(['admin']);    
     $data = Flight::request()->data->getData();
     try {
         Flight::json(Flight::productService()->updateProduct($id, $data));
@@ -109,7 +109,7 @@ Flight::route('PUT /admin/products/@id', function($id){
  * )
  */
 Flight::route('DELETE /admin/products/@id', function($id){
-    // TODO: Add security check for admin role
+    Flight::auth_middleware()->authorizeRoles(['admin']);    
     try {
         Flight::productService()->deleteProduct($id);
         Flight::json(['message' => 'Product deleted successfully']);

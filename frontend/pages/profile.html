@@ -10,26 +10,45 @@
   <div class="special-decor decor3">🌿</div>
 
   <h1 class="h1heh text-center mb-5">My Profile</h1>
-  <div class="card mx-auto" style="max-width: 500px; text-align: center;">
+  <div class="card mx-auto p-4" style="max-width: 500px;">
     
-    <div class="mb-4">
+    <div class="mb-4 text-center">
       <img src="assets/img/images/0d00faf7e0a04fe724ecd886df774e4c.jpg" alt="Profile Image" class="rounded-circle img-fluid" style="width: 150px; height: 150px; object-fit: cover; box-shadow: 0 5px 20px rgba(0,0,0,0.15);">
+      <h2 id="profile-name-display" class="mt-3">User Profile</h2>
     </div>
 
-    <div class="mb-3 text-start">
-      <label for="name" class="form-label">Name</label>
-      <input type="text" class="form-control" id="name" placeholder="John Doe" readonly>
-    </div>
-    <div class="mb-3 text-start">
-      <label for="email" class="form-label">Email</label>
-      <input type="email" class="form-control" id="email" placeholder="johndoe@example.com" readonly>
-    </div>
-    <div class="mb-3 text-start">
-      <label for="role" class="form-label">Role</label>
-      <input type="text" class="form-control" id="role" value="User" readonly>
+    <form id="profile-form">
+        <div class="mb-3 text-start">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" readonly required>
+        </div>
+
+        <div class="mb-3 text-start">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" readonly required>
+        </div>
+
+        <div class="mb-3 text-start">
+            <label for="role" class="form-label">Role</label>
+            <input type="text" class="form-control" id="role" readonly>
+        </div>
+        
+        <div id="password-group" class="d-none">
+             <hr>
+             <h5 class="mb-3">Change Password</h5>
+             <div class="mb-3 text-start">
+                <label for="new-password" class="form-label">New Password</label>
+                <input type="password" class="form-control" id="new-password" placeholder="Leave blank to keep current password">
+            </div>
+        </div>
+
+        <div class="d-grid mt-4">
+            <button type="button" class="btn btn-dark" id="editProfileBtn">Edit Profile</button>
+        </div>
+    </form>
+    <div class="mt-3 text-center">
+        <a href="#orders" class="text-decoration-none">View Order History</a>
     </div>
 
-    <button class="btn btn-coffee mt-3">Edit Profile</button>
   </div>
-
 </div>

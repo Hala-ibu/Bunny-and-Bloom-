@@ -62,18 +62,115 @@ Flight::route('POST /register', function(){
 Flight::route('POST /login', function(){
     $data = Flight::request()->data->getData();
     
-    $email = $data['email'] ?? null;
-    $password = $data['password'] ?? null;
-
-    $user = Flight::userService()->login($email, $password);
+    if (empty($data['email']) || empty($data['password'])) {
+        Flight::json(['error' => 'Email and password are required.'], 400);
+        return;
+    }
     
-    if ($user) {
-        unset($user['password']); 
-        Flight::json($user);
+    $userToken = Flight::userService()->login($data['email'], $data['password']);
+    
+    if ($userToken) {
+        // Includes user data and the JWT token
+        Flight::json($userToken);
     } else {
-        Flight::json(['error' => 'Invalid email or password'], 401);
+        Flight::json(['error' => 'Invalid email or password.'], 401);
     }
 });
 
+/**
+ * @OA\Get(
+ * path="/users",
+ * summary="Get all users (Admin)",
+ * tags={"Admin - Users"},
+ * @OA\Response(response=200, description="List of all users")
+ * )
+ */
+Flight::route('GET /admin/users', function(){
+    Flight::auth_middleware()->authorizeRoles(['admin']);
+    Flight::json(Flight::userService()->getAllUsers());
+});
+
+/**
+ * @OA\Get(
+ * path="/users/@id",
+ * summary="Get user by ID",
+ * tags={"Users"},
+ * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+ * @OA\Response(response=200, description="User details")
+ * )
+ */
+Flight::route('GET /users/@id', function($id){
+    Flight::auth_middleware()->authorizeRoles(['admin', 'user']);
+    $authenticatedUser = Flight::get('user'); // Changed variable name for clarity
+    
+    // A user can only view their own profile, or an admin can view any profile
+    if ($authenticatedUser['id'] != $id && strtolower($authenticatedUser['role']) != 'admin') {
+        Flight::halt(403, "Access forbidden. You can only view your own profile.");
+    }
+    
+    $user = Flight::userService()->getById($id);
+    if ($user) {
+        unset($user['password']); // Never expose the password hash
+        Flight::json($user);
+    } else {
+        Flight::json(['error' => 'User not found'], 404);
+    }
+});
+
+/**
+ * @OA\Put(
+ * path="/users/@id",
+ * summary="Update user profile",
+ * tags={"Users"},
+ * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+ * @OA\RequestBody(
+ * description="User profile data to update",
+ * @OA\JsonContent(
+ * @OA\Property(property="username", type="string", example="jane.doe"),
+ * @OA\Property(property="email", type="string", format="email", example="jane.doe@example.com")
+ * )
+ * ),
+ * @OA\Response(response=200, description="Profile updated"),
+ * @OA\Response(response=403, description="Access forbidden")
+ * )
+ */
+Flight::route('PUT /users/@id', function($id){
+    Flight::auth_middleware()->authorizeRoles(['admin', 'user']);
+    $authenticatedUser = Flight::get('user'); // Changed variable name for clarity
+
+    if ($authenticatedUser['id'] != $id && strtolower($authenticatedUser['role']) != 'admin') {
+        Flight::halt(403, "Access forbidden. You can only update your own profile.");
+    }
+
+    $data = Flight::request()->data->getData();
+    try {
+        $updatedUser = Flight::userService()->updateProfile($id, $data);
+        unset($updatedUser['password']);
+        Flight::json($updatedUser);
+    } catch (\Exception $e) {
+        Flight::halt(400, $e->getMessage());
+    }
+});
+
+/**
+ * @OA\Delete(
+ * path="/admin/users/@id",
+ * summary="Delete a user (Admin)",
+ * tags={"Admin - Users"},
+ * @OA\Parameter(name="id", in="path", required=true, @OA\Schema(type="integer")),
+ * @OA\Response(response=200, description="User deleted")
+ * )
+ */
+Flight::route('DELETE /admin/users/@id', function($id){
+    // Only Admin can delete users
+    Flight::auth_middleware()->authorizeRoles(['admin']);
+    
+    try {
+        Flight::userService()->delete($id);
+        Flight::json(['message' => 'User deleted successfully']);
+    } catch (\Exception $e) {
+        Flight::halt(400, $e->getMessage());
+    }
+});
 
 ?>

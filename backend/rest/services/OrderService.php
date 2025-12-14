@@ -74,36 +74,29 @@ class OrderService extends BaseService {
  
     public function cancelOrder($order_id) {
         $order = $this->getById($order_id);
-        
         if (!$order) {
             throw new Exception("Order with ID {$order_id} not found.");
         }
-        
         if ($order['status'] !== 'Pending') {
             throw new Exception("Order #{$order_id} cannot be cancelled as its status is '{$order['status']}'.");
         }
-
         $items = $this->orderProductsDao->getItemsByOrderId($order_id);
-        
         try {
             foreach ($items as $item) {
                 $this->inventoryService->adjustStock($item['product_id'], $item['quantity']); 
             }
-
             $updateData = ['status' => 'Cancelled'];
-            $result = $this->dao->updateStatus($order_id, 'Cancelled'); // Using the DAO's explicit method
-
+            $result = $this->dao->updateStatus($order_id, 'Cancelled'); 
             if (!$result) {
                 throw new Exception("Failed to update order status to Cancelled. Inventory may be out of sync.");
             }
-            
             return true;
-            
         } catch (Exception $e) {
             error_log("Order Cancellation Error for ID {$order_id}: " . $e->getMessage());
             throw $e;
         }
     }
+
 
 
     public function completeOrder($order_id) {

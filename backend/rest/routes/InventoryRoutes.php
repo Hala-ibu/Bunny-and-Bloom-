@@ -9,7 +9,7 @@
  * )
  */
 Flight::route('GET /admin/inventory', function(){
-    // TODO: Add security check for admin role
+    Flight::auth_middleware()->authorizeRoles(['admin']);    
     Flight::json(Flight::inventoryService()->getAllStockDetails());
 });
 
@@ -31,7 +31,7 @@ Flight::route('GET /admin/inventory', function(){
  * )
  */
 Flight::route('PUT /admin/inventory/@product_id', function($product_id){
-    // TODO: Add security check for admin role
+    Flight::auth_middleware()->authorizeRoles(['admin']);    
     $data = Flight::request()->data->getData();
     try {
         $newStock = Flight::inventoryService()->adjustStock($product_id, $data['quantity_change']);
