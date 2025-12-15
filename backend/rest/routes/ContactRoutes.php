@@ -37,7 +37,7 @@ Flight::route('POST /contact', function(){
  * )
  */
 Flight::route('GET /admin/contact', function(){
-    // TODO: Add security check for admin role
+    Flight::auth_middleware()->authorizeRole(Roles::ADMIN); 
     Flight::json(Flight::contactService()->getAllMessages());
 });
 ?>

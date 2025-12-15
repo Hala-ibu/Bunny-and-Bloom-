@@ -10,7 +10,7 @@ class ProductService extends BaseService {
     public function __construct() {
         $dao = new ProductDao(); 
         parent::__construct($dao);
-        $this->inventoryService = new InventoryService(); 
+        $this->inventoryService = Flight::get('inventoryService'); 
     }
 
     public function createProduct($data) {

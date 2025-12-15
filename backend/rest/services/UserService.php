@@ -1,13 +1,15 @@
 <?php
 require_once 'BaseService.php';
 require_once 'UserDao.php'; 
+require_once __DIR__ . '/../../config.php'; 
+
+use Firebase\JWT\JWT; 
 
 class UserService extends BaseService {
 
     public function __construct() {
         parent::__construct(new UserDao()); 
     }
-
 
     public function registerUser($data) {
         if (empty($data['email']) || empty($data['password']) || empty($data['username'])) {
@@ -19,7 +21,7 @@ class UserService extends BaseService {
         }
 
         $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-        $data['role'] = 'User'; 
+        $data['role'] = 'user'; 
         
         $cleanData = [
             'username' => $data['username'],
@@ -36,8 +38,33 @@ class UserService extends BaseService {
         
         if ($user && password_verify($password, $user['password'])) {
             unset($user['password']);
-            return $user;
+            
+            $time = time(); 
+            $expiration_time = $time + Config::JWT_EXPIRATION_SECONDS();
+            
+            $payload = [
+                'iat'  => $time,
+                'exp'  => $expiration_time,
+                'iss'  => Config::JWT_ISSUER(), 
+                'sub'  => $user['id'], 
+                'user' => [ 
+                    'id'   => $user['id'],
+                    'role' => $user['role']
+                ]
+            ];
+            
+            $jwt = JWT::encode(
+                $payload, 
+                Config::JWT_SECRET(),
+                Config::JWT_ALGORITHM() 
+            );
+            
+            return [
+                'user'  => $user,
+                'token' => $jwt 
+            ];
         }
+        
         return false;
     }
 
@@ -45,17 +72,14 @@ class UserService extends BaseService {
         return $this->dao->getAllUsers(); 
     }
     
-
     public function updateProfile($id, $data) {
-        if (isset($data['role']) && !in_array($data['role'], ['User', 'Admin', 'Staff'])) {
+        $allowedRoles = ['user', 'admin']; 
+        
+        if (isset($data['role']) && !in_array(strtolower($data['role']), $allowedRoles)) {
             throw new Exception("Invalid role specified.");
         }
-        return $this->dao->updateUser($id, $data);
-    }
-
-
-    public function deleteUser($id) {
-        return $this->dao->deleteUser($id);
+        
+        return $this->update($id, $data);
     }
 }
 ?>
