@@ -129,4 +129,49 @@
 
 </div>
 
-</body></div>
+</body>
+<script>
+$(document).ready(function() {
+    
+    $("#myForm").on("submit", function(e) {
+        e.preventDefault();
+        
+        var formData = {
+            username: $("#Username").val(),
+            email: $("#Email").val(),
+            password: $("#Password").val()
+        };
+
+        UserService.register(formData)
+            .done(function(response) {
+                alert("Registration successful! Please login.");
+                $("#login-pill").tab('show');
+            })
+            .fail(function(xhr) {
+                alert("Error: " + (xhr.responseJSON ? xhr.responseJSON.error : "Failed"));
+            });
+    });
+
+    $("#login-form").on("submit", function(e) {
+        e.preventDefault();
+
+        var loginData = {
+            email: $("#email").val(),
+            password: $("#password").val()
+        };
+
+        AuthService.login(loginData)
+            .done(function(response) {
+                if (response.token) {
+                    localStorage.setItem('jwt_token', response.token);
+                    window.location.hash = '#Home';
+                    window.location.reload();
+                }
+            })
+            .fail(function(xhr) {
+                alert("Login Failed: " + (xhr.responseJSON ? xhr.responseJSON.error : "Unauthorized"));
+            });
+    });
+});
+</script>
+</div>

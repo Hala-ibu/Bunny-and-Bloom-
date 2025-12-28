@@ -1,14 +1,16 @@
-const UserService = {
-
-    getCurrentUserProfile: () => {
-        const user = AuthService.getCurrentUser();
-        if (!user || !user.id) {
-            return Promise.reject({ message: "User not logged in or ID missing." });
+var UserService = {
+    register: function(data) {
+        if (data.password.length < 6) {
+            return $.Deferred().reject({ 
+                responseJSON: { error: "Password must be at least 6 characters" } 
+            });
         }
-        return RestClient.get(`/users/${user.id}`);
-    },
 
-    updateUserProfile: (id, data) => {
-        return RestClient.put(`/users/${id}`, data);
+        return $.ajax({
+            url: 'rest/register',
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: "application/json"
+        });
     }
 };
