@@ -1,7 +1,8 @@
 # 🐰 Bunny & Bloom Web App
-
+this is the web link https://urchin-app-8ww4v.ondigitalocean.app/#Home
 ## What this project is about
 Bunny & Bloom is a **single-page web application (SPA)** built using **HTML, JavaScript, and MySQL**.
+
 
 For **Milestone 1**, the focus was on **frontend development** and **database planning** (draft ERD). Later milestones will include full backend features, CRUD operations, and user authentication.
 
