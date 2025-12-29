@@ -6,4 +6,4 @@ const getAuthHeader = () => {
     return {};
 };
 
-const API_BASE = 'http://localhost/your-project-name/rest';
+const API_BASE = 'http://localhost/Bunny-And-Bloom-/backend/';
