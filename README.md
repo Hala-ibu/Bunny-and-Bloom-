@@ -1,72 +1,31 @@
-# 🐰 Bunny & Bloom Web App
+# Bunny & Bloom
 
-## What this project is about
-Bunny & Bloom is a **single-page web application (SPA)** built using **HTML, JavaScript, and MySQL**.
+Bunny & Bloom is a café-themed web application with a browser-based interface and a PHP REST API backed by MySQL. The repository includes both the client and server code, plus API routes for the main store features.
 
-For **Milestone 1**, the focus was on **frontend development** and **database planning** (draft ERD). Later milestones will include full backend features, CRUD operations, and user authentication.
+## Features
 
----
+- Browse the home, menu, blog, about, profile, and sign-in pages.
+- Work with products, inventory, orders, reviews, users, and contact requests through dedicated API routes and services.
+- Use token-based request middleware for protected API routes; login, registration, public product reads, documentation, and contact routes are explicitly handled by the app.
+- Manage order states, including cancelling pending orders and restoring their stock quantities.
+- Explore the API documentation served through Swagger UI.
 
-## What I did so far
-- Created the **project structure** following the intended organization.
-- Built **static pages** for the app (no backend yet):
-    - **Register & Login**
-    - **Home, Menu, Blog, About, Profile**
-    - **Page for all entities**
-- Used **Bootstrap template** for a responsive and consistent design.
-- Each page is **separate HTML**, with JS and CSS included only once.
-- Planned the **database with 5 entities**:
-    - Users
-    - Products
-    - Orders
-    - Reviews
-    - Inventory
+## Project structure
 
-![erd](frontend/assets/img/erd.png)
+- `frontend/` — HTML/CSS/JavaScript application, page views, UI assets, API client, services, and controllers.
+- `backend/index.php` — FlightPHP application entry point and route registration.
+- `backend/rest/routes/` — API route definitions.
+- `backend/rest/service/` — business logic for authentication, users, products, orders, reviews, inventory, and contact requests.
+- `backend/rest/dao/` — database access code.
+- `backend/config.php` — backend configuration, including database connection settings.
+- `composer.json` and `backend/composer.json` — PHP dependency manifests.
 
----
+## Run locally
 
-## Project Structure
-project-folder/ │ ├─ frontend/ # Frontend (client-side) │ ├─ index.html # Main HTML file (entry point) │ ├─ assets/ # Static assets (images, fonts, icons) │ │ ├─ css/ # Stylesheets (global & component-specific) │ │ ├─ js/ # JavaScript files for interactivity │ ├─ pages/ # Individual HTML/component files for pages │ ├─ services/ # API calls and frontend service logic │ └─ utils/ # Utility functions (formatting, validation) │ ├─ backend/ # Backend (server-side) │ ├─ rest/ # REST API endpoints │ │ ├─ routes/ # API routes │ │ ├─ services/ # Business logic │ │ └─ dao/ # Data Access Objects for database │ ├─ index.php # Backend entry point │ ├─ .htaccess # Server configuration & URL rewriting │ ├─ vendor/ # Composer dependencies │ ├─ composer.json # PHP dependencies & metadata │ └─ composer.lock # Locked dependency versions │ ├─ .gitignore # Files/folders to ignore in version control └─ README.md # Project documentation
+You’ll need PHP, Composer, and MySQL. Install the Composer dependencies for the backend, configure the database connection in `backend/config.php`, and point a PHP-capable web server at the backend. Open the frontend through a local web server and configure its API base URL to match your backend. Database setup and local credentials depend on your environment.
 
----
+## Technology
 
-## Next Steps
-- Create the **database in MySQL**.
-- Connect **backend to frontend** with **FlightPHP and AJAX**.
-- Implement **CRUD operations** for all entities.
-- Add **authentication and role-mbased access**.
----
+JavaScript, HTML, CSS, Bootstrap, PHP, FlightPHP, Composer, MySQL, and Swagger/OpenAPI.
 
-## Project Overview
-Bunny & Bloom is a website for a coffee shop. This single-page web application (SPA) provides users with a clean, responsive interface to explore the café's offerings, services, and more.
-
-## Pages and Features
-
-### Homepage
-- The first page of the website.
-- Displays:
-    - **Services**: What Bunny & Bloom offers.
-    - **Reviews**: Customer feedback and testimonials.
-    - **Location**: Map and address of the café.
-- Includes a **button to navigate to the Menu** page.
-- Other pages are accessible via the **navbar**.
-
-### Blog
-- Contains news and updates related to the café.
-
-### About
-- Provides a general explanation of the website and the café.
-
-### User Pages
-- **Login & Registration**: Allow users to sign in and create an account.
-- **Profile**: A personal page for each user to view and manage their information.
-
-### Admin Page
-- Accessible only to admins.
-- Manages **five entities**:
-    - Users
-    - Products
-    - Orders
-    - Reviews
-    - Inventory
+This README describes the implementation present in the repository; configure and verify the local database and server before using the app.
